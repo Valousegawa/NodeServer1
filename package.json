@@ -1,0 +1,16 @@
+{
+  "name": "myserver",
+  "version": "1.0.0",
+  "description": "This is my first Node JS. Please be gentle ! *squee*",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \\\"Error : no test specified !\\\" && exit 1",
+	"start": "node index.js"
+  },
+  "author": "telest",
+  "license": "ISC",
+  "repository" :{
+	"type" : "git",
+	"url" : "https://github.com/Valousegawa/NodeServer1.git"
+  }
+}
