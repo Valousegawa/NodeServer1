@@ -71,11 +71,10 @@
 							<form>
 								Nom de repository : <input id="rep_name" />
 								Adresse du repository : <input id="rep_url" />
-								<button onclick="submit()">Créer</button>
+								<button onclick="send()">Créer</button>
 							</form>
 							</div>
 							<div class="content table-responsive table-full-width" id="list"></div>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -93,14 +92,18 @@
 	<script src="demo.js"></script>
 	<script>  
 	 var socket = io.connect('http://172.16.12.221:8080');	 
-	 socket.on('git', function(data) {
+	 
+	 socket.on('connect', function(data) {
+		socket.emit('git', 'Client joined, index displayed');
+	 });
+	 
+	 socket.on('git_rep', function(data) {
 		$("#list").html(data);
 	 });
 	 
-	 function submit(){
-		var obj = {name:$("#rep_name").val(), url:$("#rep_url").val()}
+	 function send(){
+		var obj = {name:$("#rep_name").val(), url:$("#rep_url").val()};
 		socket.emit('create_git', obj);
-		location.reload();
 	 }
 	</script> 
     </body>

@@ -107,10 +107,26 @@ io.on('connection', function(client) {
 	});
 	
 	client.on('create_git', function(data) {
-		process.execFile('/home/telest/MyServer/bash/git.sh', [data[0], data[1]], function(err, out, code) {
+		process.execFile('/home/telest/MyServer/bash/git.sh', [data["name"], data["url"]], function(err, out, code) {
 			if (err instanceof Error){
 				throw err;
 			}
+		});
+	});
+	
+	client.on('git', function(data) {
+		process.execFile('/home/telest/MyServer/bash/git_list.sh', function(err, out, code) {
+			var html = "<table class='table-stiped table-bordered'>";
+			if (err instanceof Error){
+				throw err;
+			}
+			var git_info = JSON.parse(out);
+			var keyNames = Object.keys(git_info);
+			for (var i in keyNames) {
+				html += "<tr>" + git_info[i] + "</tr>";
+			}
+			html += "</table>";
+			client.emit("git_rep", html);
 		});
 	});
 	
