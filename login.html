@@ -1,0 +1,47 @@
+<!doctype html>  
+<html lang="fr">  
+    <head>
+		<title>Admin Server Debian | Connexion</title>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/css/login.css">
+    </head>
+    <body>
+        <h2>Admin Server Debian</h2>
+		<div class="container">
+			<div class="card card-container">
+				<img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+				<p id="profile-name" class="profile-name-card"></p>
+				<form class="form-signin">
+					<span id="reauth-email" class="reauth-email"></span>
+					<input type="text" id="inputUsername" class="form-control" placeholder="Identifiant" required autofocus>
+					<input type="password" id="inputPassword" class="form-control" placeholder="Motdepass" required>
+					<div id="remember" class="checkbox">
+						<label>
+							<input type="checkbox" value="remember-me"> Enregistrer identifiant
+						</label>
+					</div>
+					<button id="buttonConnection" class="btn btn-lg btn-primary btn-block btn-signin">Connexion</button>
+				</form><!-- /form -->
+			</div><!-- /card-container -->
+		</div><!-- /container -->
+		
+		
+		<script src="/jquery/dist/jquery.js"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+		<script>
+		$("#buttonConnection").click(function (e) {
+			e.preventDefault();
+			var url= window.location.origin+'/login';
+			$.post(url, {
+				username: $('#inputUsername').val(),
+				password: $('#inputPassword').val()
+			}).done(function (result) {
+				localStorage.setItem("serverToken", result.token);
+				window.location.replace(window.location.origin);
+			}).fail(function(){
+				$("#reauth-email").html("Connection échoué");
+			});
+		});
+		</script>
+    </body>
+</html>
